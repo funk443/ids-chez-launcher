@@ -38,13 +38,14 @@ application anyway,) it passes them all to the underlying Scheme kernel.
 
 # Building
 
+## Windows MSVC
+
 To build this launcher, you'll need some files from Chez Scheme.
 
-- `scheme.h` file
-- (`csv1030.dll` and `csv1030.lib`) or `csv1030.so` (Replace 1030 with whatever
-  version the current Chez Scheme release is.)
+- `scheme.h`.
+- `csv1030.dll` and `csv1030.lib`.
 
-The above files can be found in the Chez Scheme installation folder, if they're
+The above files can be found in the Chez Scheme installation folder (), if they're
 not there, you probably need to build Chez Scheme by yourself, see the [official
 build doc](https://github.com/cisco/ChezScheme/blob/main/BUILDING) for more
 info.
@@ -52,15 +53,25 @@ info.
 After these files are obtained, put them under the `chez` folder (or wherever
 you prefer, as long as your compiler can find them).
 
-A build script for MSVC is provided, simply run it and the build should finish
-in no time.
+Then run the build script, `build.bat`.
 
-For UNIX folks, I currently don't have an UNIX environment to test how to build
-this, but it should be something like this:
+## UNIX
 
-```shell
-$ cc -oapp.exe -O2 -I./chez c/launcher.c -L./chez -lcsv1030
-```
+On UNIX systems, Chez Scheme is statically linked, so the required files are
+different:
+
+- `scheme.h`.
+- `libkernel.a`.
+
+And 2 files from other libraries:
+
+- `liblz4.a` from lz4.
+- `libz.a` from zlib.
+
+I think lz4 and zlib can be in shared library format, but I'm not sure, feel
+free to try.
+
+Put these files into `chez` directory, then run the build script `build.sh`.
 
 # Usage
 
