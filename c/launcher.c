@@ -11,7 +11,7 @@
 
 #include <scheme.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
     Sscheme_init(NULL);
 
     char *boot_file_name = malloc(strlen(argv[0]) + strlen(".boot") + 1);
