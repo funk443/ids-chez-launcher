@@ -89,8 +89,23 @@ this:
 
 (compile-program "s/main.ss")
 (compile-whole-program "s/main.wpo" "s/myapp.so")
-(make-boot-file "myapp.exe.boot" '("petite" "scheme") "s/myapp.so")
+
+;; There are two ways to make a boot file, the first one is to embed all the
+;; other needed boot files (e. g. petite.boot) into the boot file you're making.
+;;
+;; Doing so makes distributing the app easier, since you only need to send the
+;; user the boot file you made.
+(make-boot-file "myapp.exe.boot" '() "/usr/local/lib/csv10.3.0/a6le/petite.boot" "s/myapp.so")
+
+;; The second way is to tell the scheme runtime your boot file depends on other
+;; boot files. If you choose this way, you'll also have to send the other boot
+;; files your app depends on to the user.
+(make-boot-file "myapp.exe.boot" '("petite") "s/myapp.so")
 ```
 
 After this, simply rename the launcher to `myapp.exe`, and you should be good to
 go.
+
+If you want to distribute your app, simply send the end user the executable
+`myapp.exe` and the boot file `myapp.exe.boot` (and the shared libraries if not
+linking statically).
